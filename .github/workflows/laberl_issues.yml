@@ -13,7 +13,11 @@ jobs:
       issues: write
       contents: write
     steps:
-      # Step 1: Label the issue
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Label the issue
       - name: Label the issue
         run: |
           gh issue edit "$NUMBER" --add-label "$LABELS"
@@ -22,7 +26,7 @@ jobs:
           NUMBER: ${{ github.event.issue.number }}
           LABELS: triage
 
-      # Step 2: Create a branch for the issue
+      # Step 3: Create a branch for the issue
       - name: Create a branch
         run: |
           BRANCH_NAME="issue-$NUMBER"
@@ -34,10 +38,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
 
-      # Step 3: Add a comment to the issue with the branch reference
+      # Step 4: Add a comment to the issue with the branch reference
       - name: Comment on the issue
         run: |
-          gh issue comment "$NUMBER" --body "A **branch** has been created for this issue: \`$BRANCH_NAME\`."
+          gh issue comment "$NUMBER" --body "A branch has been created for this issue: \`$BRANCH_NAME\`."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
