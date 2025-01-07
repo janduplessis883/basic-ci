@@ -6,4 +6,3 @@ seaborn
 # Testing packages
 pytest
 black
-pylint
