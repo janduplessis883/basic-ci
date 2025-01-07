@@ -27,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       # Step 4: Run pylint
-      - name: Run pylint
+      - name: Run black
         run: |
           find . -iname "*.py" -not -path "./tests/*" | xargs -n1 -I {} pylint --output-format=colorized {} || true
 
